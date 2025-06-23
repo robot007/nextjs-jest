@@ -33,6 +33,34 @@ jobs:
       run: npm run test:ci
       working-directory: ./with-jest-app
 
+    - name: Debug directory structure
+      run: |
+        echo "Current working directory:"
+        pwd
+        echo "\nDirectory contents:"
+        ls -la
+        echo "\nChecking if package.json exists:"
+        if [ -f package.json ]; then
+          echo "package.json found"
+          echo "\nScripts section in package.json:"
+          cat package.json | grep -A 20 '"scripts"'
+        else
+          echo "package.json NOT found"
+        fi
+        echo "\nNode.js version:"
+        node --version
+        echo "\nnpm version:"
+        npm --version
+      working-directory: ./with-jest-app
+
+    - name: Install dependencies
+      run: npm ci
+      working-directory: ./with-jest-app
+
+    - name: Run tests
+      run: npm run test:ci
+      working-directory: ./with-jest-app
+
     - name: Build project
       run: npm run build
       working-directory: ./with-jest-app
